@@ -19,9 +19,10 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 Route::get('/', [HomeController::class, 'index']);
-Route::get('divisions', [HomeController::class, 'divisions']);
-Route::get('netwins', [HomeController::class, 'netwins']);
-Route::get('placements', [HomeController::class, 'placements']);
+Route::get('divisions', [HomeController::class, 'divisions'])->name('divisions');
+Route::get('netwins', [HomeController::class, 'netwins'])->name('netwins');
+Route::get('placements', [HomeController::class, 'placements'])->name('placements');
 
-Route::get('login', [AuthController::class, 'login']);
-Route::get('register', [AuthController::class, 'register']);
+//Route::get('login', [AuthController::class, 'login']);
+//Route::get('register', [AuthController::class, 'register']);
+

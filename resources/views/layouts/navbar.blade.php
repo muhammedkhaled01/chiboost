@@ -31,8 +31,17 @@
 
             </ul>
             <div class="log">
+                @auth
+                <form method="POST" action="{{route('logout')}}">
+                    @csrf
+                    <span class="username">{{Auth::user()->name}}</span>
+                    <button type="submit" class="btn btn-logout">Logout</button>
+                </form>
+                @endauth
+                @guest
                 <a href="{{url('login')}}" target="_blank" class="btn">Login</a>
                 <a href="{{url('register')}}" target="_blank" class="btn ">Register</a>
+                    @endguest
             </div>
         </div>
     </div>
