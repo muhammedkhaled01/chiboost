@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('divisions', [HomeController::class, 'divisions'])->name('divisions');
 Route::get('netwins', [HomeController::class, 'netwins'])->name('netwins');
 Route::get('placements', [HomeController::class, 'placements'])->name('placements');
+Route::post('saveDivisions', [HomeController::class, 'saveDivisions'])->name('saveDivisions');
+Route::resource('admin',DashboardController::class)->middleware(['auth','admin']);
 
-//Route::get('login', [AuthController::class, 'login']);
+//Route::get('admin', [DashboardController::class, 'requests'])->name('admin');
+//Route::get('login', [AuthController::class, 'login']);s
 //Route::get('register', [AuthController::class, 'register']);
 

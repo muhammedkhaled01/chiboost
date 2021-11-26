@@ -3,7 +3,8 @@
     @include('layouts.navbar')
     <section class="bg-boosting">
 
-        <form class="container">
+        <form class="container" action="{{route('saveDivisions')}}" method="post">
+            @csrf
             <div class="row">
                 <div class="col-12">
                     <div class="page-title">
@@ -14,103 +15,93 @@
                     <h3 class="title">Current Rank</h3>
                     <div class="boosting-flag">
                         <div class="elo">
-                            <img src="{{asset('assets/images/iron_4.png')}}" id="rank_1" class="img-fluid rank-imgW"
-                                 alt="From Division">
-{{--                            @for($i=1;$i<=25;$i++)--}}
-{{--                            <img src="{{asset('assets/images/'+$i+'.png')}}" id="rank_{{$i}}" class="img-fluid rank-img @if($i>1) hidden @endif"--}}
-{{--                                 alt="From Division">--}}
-{{--                                @endfor--}}
+                            <?php $index = 1;?>
+                            @foreach($ranks as $rank)
+                                @foreach($rank['items'] as $item)
+                                    @if($rank['name'].($item!=5?'_'.$item:"")!='challenger')
+                                        <img
+                                            src="{{asset('assets/images/ranks/'.$rank['name'].($item!=5?'_'.$item:"").'.png')}}"
+                                            id="_{{$rank['name'].($item!=5?'_'.$item:"")}}"
+                                            class="img-fluid rank-imgW rankimg1 @if($index>1) hidden @endif"
+                                            alt="From Division">
+                                    @endif
+                                    <?php $index++;?>
+                                @endforeach
+                            @endforeach
                         </div>
                         <div class="form-group">
                             <label for="from-select">Rank</label>
-                            <select class="form-select" id="from-select">
-                                <option id="0" value="1">Iron 4</option>
-                                <option id="1" value="2">Iron 3</option>
-                                <option id="2" value="3">Iron 2</option>
-                                <option id="3" value="4">Iron 1</option>
-                                <option id="4" value="6">Bronze 4</option>
-                                <option id="5" value="7">Bronze 3</option>
-                                <option id="6" value="8">Bronze 2</option>
-                                <option id="7" value="9">Bronze 1</option>
-                                <option id="8" value="11">Silver 4</option>
-                                <option id="9" value="12">Silver 3</option>
-                                <option id="10" value="13">Silver 2</option>
-                                <option id="11" value="14">Silver 1</option>
-                                <option id="12" value="16">Gold 4</option>
-                                <option id="13" value="17">Gold 3</option>
-                                <option id="14" value="18">Gold 2</option>
-                                <option id="15" value="19">Gold 1</option>
-                                <option id="16" value="21">Platinum 4</option>
-                                <option id="17" value="22">Platinum 3</option>
-                                <option id="18" value="23">Platinum 2</option>
-                                <option id="19" value="24">Platinum 1</option>
-                                <option id="20" value="26">Diamond 4</option>
-                                <option id="21" value="27">Diamond 3</option>
-                                <option id="22" value="28">Diamond 2</option>
-                                <option id="23" value="29">Diamond 1</option>
-                                <option id="24" value="30">Master</option>
-                                <option id="25" value="31">Grandmaster</option>
+                            <select class="form-select" id="from-select-rank1" name="current_rank">
+                                <?php $index = 1;?>
+                                @foreach($ranks as $rank)
+                                    @foreach($rank['items'] as $item)
+                                        @if($rank['name'].($item!=5?'_'.$item:"")!='challenger')
+                                            <option data-id="{{$index++}}"
+                                                    value="{{$rank['name']}}{{$item!=5?'_'.$item:''}}">{{ucfirst($rank['name'])}}{{$item!=5?' '.$item:''}}</option>
+                                        @endif
+                                    @endforeach
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="currentLP">League Points <span class="lp-label">0</span></label>
-                            <input type="range" class="form-control-range" id="currentLP" min="0" step="20" max="100"
+                            <input type="range" name="league_points" class="form-control-range" id="currentLP" min="0"
+                                   step="20" max="100"
                                    value="0">
                         </div>
                         <div class="form-group">
                             <label for="server">Server</label>
-                            <select class="form-select" id="server">
-                                <option value="1">EUW</option>
-                                <option value="2">EUNE</option>
-                                <option value="3">LAN</option>
-                                <option value="4">LAS</option>
-                                <option value="5">NA</option>
-                                <option value="6">OCE</option>
-                                <option value="7">TR</option>
-                                <option value="8">RU</option>
+                            <select class="form-select" name="server" id="server">
+                                <option >EUW</option>
+                                <option >EUNE</option>
+                                <option >LAN</option>
+                                <option >LAS</option>
+                                <option >NA</option>
+                                <option >OCE</option>
+                                <option >TR</option>
+                                <option >RU</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="queue">Queue</label>
-                            <select class="form-select" id="queue">
-                                <option value="1">Solo/Duo Queue</option>
-                                <option value="2">Flex Queue</option>
-                                <option value="3">3v3 Flex Queue</option>
+                            <select class="form-select" name="queue" id="queue">
+                                <option >Solo/Duo Queue</option>
+                                <option >Flex Queue</option>
+                                <option >3v3 Flex Queue</option>
                             </select>
                         </div>
                         <label>Roles</label>
-                        @section('page_js')
-                            <script>
-                                //هيتحط جوه ال select on change
-                                //$('.rank-img').addClass('hidden')
-                                // $(`#rank_${$(this).val()}`).removeClass('hidden')
-                            </script>
-                        @endsection
+
                         <div id="role-selection" class="form-group">
                             <div class="form-check">
                                 <img src="{{asset('assets/images/top.png')}}" class="role roleTop" alt="Top">
-                                <input class="form-check-input role-checkbox" data-price="1" type="checkbox"  name="roleType" id="roleTop" value="top">
+                                <input class="form-check-input role-checkbox" data-price="1" type="checkbox"
+                                       name="roleType[]" id="roleTop" value="top">
                                 <label class="form-check-label" for="roleTop">Top</label>
                             </div>
                             <div class="form-check">
-                                <img src="{{asset('assets/images/jungle.png')}}"  class="role roleJungle" alt="Jungle">
-                                <input class="form-check-input role-checkbox " data-price="2" type="checkbox" name="roleType" id="roleJungle" value="jungle">
+                                <img src="{{asset('assets/images/jungle.png')}}" class="role roleJungle" alt="Jungle">
+                                <input class="form-check-input role-checkbox " data-price="2" type="checkbox"
+                                       name="roleType[]" id="roleJungle" value="jungle">
                                 <label class="form-check-label" for="roleJungle">Jungle</label>
                             </div>
                             <div class="form-check">
                                 <img src="{{asset('assets//images/mid.png')}}" class="role roleMid" alt="Mid">
-                                <input class="form-check-input role-checkbox" data-price="3" type="checkbox"  name="roleType" id="roleMid" value="mid">
+                                <input class="form-check-input role-checkbox" data-price="3" type="checkbox"
+                                       name="roleType[]" id="roleMid" value="mid">
                                 <label class="form-check-label" for="roleMid">Mid</label>
                             </div>
                             <div class="form-check">
                                 <img src="{{asset('assets/images/bot.png')}}" class="role roleBot" alt="Bot">
-                                <input class="form-check-input role-checkbox" data-price="4" type="checkbox"  name="roleType" id="roleBot" value="bot">
+                                <input class="form-check-input role-checkbox" data-price="4" type="checkbox"
+                                       name="roleType[]" id="roleBot" value="bot">
                                 <label class="form-check-label" for="roleBot">Bot</label>
                             </div>
                             <div class="form-check">
                                 <img src="{{asset('assets/images/support.png')}}" class="role roleSupport"
                                      alt="Support">
-                                <input class="form-check-input role-checkbox" data-price="5" type="checkbox"  name="roleType" id="roleSupport" value="support">
+                                <input class="form-check-input role-checkbox" data-price="5" type="checkbox"
+                                       name="roleType[]" id="roleSupport" value="support">
                                 <label class="form-check-label" for="roleSupport">Support</label>
                             </div>
                         </div>
@@ -120,44 +111,40 @@
                     <h3 class="title">Desired Rank</h3>
                     <div class="boosting-flag">
                         <div class="elo">
-                            <img src="{{asset('assets/images/iron_4.png')}}" class="img-fluid"
-                                 alt="From Division">
+                            <?php $index = 1;?>
+                            @foreach($ranks as $rank)
+                                @foreach($rank['items'] as $item)
+                                    @if($rank['name'].($item!=5?'_'.$item:"")!='iron_4')
+
+                                        <img
+                                            src="{{asset('assets/images/ranks/'.$rank['name'].($item!=5?'_'.$item:"").'.png')}}"
+                                            id="__{{$rank['name'].($item!=5?'_'.$item:"")}}"
+                                            class="img-fluid rank-imgW rankimg2 @if($index>2) hidden @endif"
+                                            alt="From Division">
+                                    @endif
+                                    <?php $index++;?>
+                                @endforeach
+                            @endforeach
                         </div>
                         <div class="form-group">
                             <label for="from-select">Rank</label>
-                            <select class="form-select" id="from-select">
-                                <option id="0" value="1">Iron 4</option>
-                                <option id="1" value="2">Iron 3</option>
-                                <option id="2" value="3">Iron 2</option>
-                                <option id="3" value="4">Iron 1</option>
-                                <option id="4" value="6">Bronze 4</option>
-                                <option id="5" value="7">Bronze 3</option>
-                                <option id="6" value="8">Bronze 2</option>
-                                <option id="7" value="9">Bronze 1</option>
-                                <option id="8" value="11">Silver 4</option>
-                                <option id="9" value="12">Silver 3</option>
-                                <option id="10" value="13">Silver 2</option>
-                                <option id="11" value="14">Silver 1</option>
-                                <option id="12" value="16">Gold 4</option>
-                                <option id="13" value="17">Gold 3</option>
-                                <option id="14" value="18">Gold 2</option>
-                                <option id="15" value="19">Gold 1</option>
-                                <option id="16" value="21">Platinum 4</option>
-                                <option id="17" value="22">Platinum 3</option>
-                                <option id="18" value="23">Platinum 2</option>
-                                <option id="19" value="24">Platinum 1</option>
-                                <option id="20" value="26">Diamond 4</option>
-                                <option id="21" value="27">Diamond 3</option>
-                                <option id="22" value="28">Diamond 2</option>
-                                <option id="23" value="29">Diamond 1</option>
-                                <option id="24" value="30">Master</option>
-                                <option id="25" value="31">Grandmaster</option>
+                            <select class="form-select" name="desired_rank" id="from-select-rank2">
+                                <?php $index = 2;?>
+                                @foreach($ranks as $rank)
+                                    @foreach($rank['items'] as $item)
+                                        @if($rank['name'].($item!=5?'_'.$item:"")!='iron_4')
+                                            <option data-id="{{$index++}}"
+                                                    value="{{$rank['name']}}{{$item!=5?'_'.$item:''}}">{{ucfirst($rank['name'])}}{{$item!=5?' '.$item:''}}</option>
+                                        @endif
+                                    @endforeach
+                                @endforeach
                             </select>
                         </div>
                         <label for="addons">Options</label>
                         <div id="addons" class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonDuoQ" value="duoQ">
+                                <input class="form-check-input check-options" data-price="1"
+                                       type="checkbox" id="addonDuoQ" value="duoQ" name="options[]">
                                 <label class="form-check-label" for="addonDuoQ">
                                     duoQ
                                     <button type="button"
@@ -175,7 +162,8 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonChampions" value="Champions">
+                                <input class="form-check-input check-options" data-price="2" type="checkbox"
+                                       id="addonChampions" value="Champions" name="options[]">
                                 <label class="form-check-label" for="addonChampions">
                                     Champions
                                     <button type="button"
@@ -193,7 +181,8 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonLivestream" value="Livestream">
+                                <input class="form-check-input check-options" data-price="3" type="checkbox"
+                                       id="addonLivestream" value="Livestream" name="options[]">
                                 <label class="form-check-label" for="addonLivestream">
                                     Livestream
                                     <button type="button" aria-label="We will stream the game live on twitch.tv."
@@ -210,7 +199,8 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonPremium" value="Premium">
+                                <input class="form-check-input check-options" data-price="4" type="checkbox"
+                                       id="addonPremium" value="Premium" name="options[]">
                                 <label class="form-check-label" for="addonPremium">
                                     Premium
                                     <button type="button"
@@ -229,9 +219,9 @@
                             </div>
                         </div>
                         <div class="price">
-                            $<span id="price" data-mainPrice="10.00">10.00</span>
+                            $<input name="price" id="price" data-mainPrice="10.00" value="10.00" readonly>
                         </div>
-                        <button type="button" class="btn btn-checkout mt-3">
+                        <button type="submit" class="btn btn-checkout mt-3">
                             Checkout
                         </button>
 

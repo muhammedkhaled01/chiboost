@@ -20,7 +20,7 @@
                                 <span class="ml-2 text-sm text-gray-600">Remember me</span>
                             </label>
                             <button type="submit" class="btn btn-login w-100 mt-1">Login</button>
-                            <a href="#" class="link-card">Forgot your password?</a>
+                            <a href="{{route("password.request")}}" class="link-card">Forgot your password?</a>
                             <hr>
                             <div class="card-auth-footer text-center ">
                                 <a href="{{url('register')}}" class="link-card d-block">Register a new account</a>

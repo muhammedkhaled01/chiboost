@@ -39,8 +39,8 @@
                 </form>
                 @endauth
                 @guest
-                <a href="{{url('login')}}" target="_blank" class="btn">Login</a>
-                <a href="{{url('register')}}" target="_blank" class="btn ">Register</a>
+                <a href="{{url('login')}}"  class="btn">Login</a>
+                <a href="{{url('register')}}" class="btn ">Register</a>
                     @endguest
             </div>
         </div>
