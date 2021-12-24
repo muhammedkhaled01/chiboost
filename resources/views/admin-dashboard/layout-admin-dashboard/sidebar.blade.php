@@ -21,7 +21,7 @@
                     <span class="side-menu__label">Marketplace</span><i class="fas fa-angle-down"></i>
                 </a>
                 <ul class="slide-menu-request">
-                    <li><a class="slide-item" href="#">Add New Account</a></li>
+                    <li><a class="slide-item" href="{{route('addNewAccount')}}">Add New Account</a></li>
                 </ul>
             </li>
         </ul>
