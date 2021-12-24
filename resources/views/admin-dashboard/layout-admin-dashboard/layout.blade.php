@@ -21,7 +21,7 @@
 @include('admin-dashboard.layout-admin-dashboard.navbar')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-2">
+        <div class="col-sm-12 col-md-12 col-lg-2 ps-0">
             @yield('sidebar')
         </div>
         <div class="col-sm-12 col-md-12 col-lg-10">

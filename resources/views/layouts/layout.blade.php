@@ -8,6 +8,9 @@
     <title>@yield('title')</title>
     @include('layouts.header')
     @yield('page_css')
+    <script>
+        var boosting = null;
+    </script>
 </head>
 <body>
 {{--@include('layouts.navbar')--}}
@@ -17,5 +20,6 @@
 @include('layouts.footer')
 @include('layouts.scripts')
 @yield('page_js')
+
 </body>
 </html>

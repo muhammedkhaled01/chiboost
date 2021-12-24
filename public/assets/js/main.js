@@ -13,6 +13,7 @@ $(document).ready(function () {
         $('.lp-label').html($(this).val());
 
     });
+
     //    Start role
     $(document).on('click', '.role', function () {
         $(this).siblings('input.role-checkbox').click();
@@ -44,6 +45,11 @@ $(document).ready(function () {
     })
 
     $(document).on('change', '#currentLP', function () {
+        var price = ($(this).val() * 1 / 20) * 1.5;
+        $('#price').attr('data-rangePrice', price)
+        countPrice()
+    })
+    $(document).on('change', '.currentLP', function () {
         var price = ($(this).val() * 1 / 20) * 1.5;
         $('#price').attr('data-rangePrice', price)
         countPrice()
@@ -116,7 +122,86 @@ $(document).ready(function () {
         onStart();
     }
 
+    if (boosting != null) {
+        var title = `
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="title-invoice">Your order</h2>
+                </div>
+            </div>
+        </div>`;
+        var content = `
+        <div class="container">
+            <div class="row">
+                <div class="col-5">
+                    <div class="text-title-order">Code</div>
+                    <div class="text-title-order">Current Rank</div>
+                     ${boosting.type == 'divisions' ? `<div class="text-title-order">desired rank</div>` : ''}
+                    <div class="text-title-order">Server</div>
+                     ${boosting.type == 'netwins' ? `<div class="text-title-order">Wins</div>` : ''}
+                     ${boosting.type == 'placements' ? `<div class="text-title-order">Games</div>` : ''}
+
+
+                    <div class="text-title-order">Total payment</div>
+                </div>
+                <div class="col-7">
+                    <div class="answer-order">${beautifyRank(boosting.id)}</div>
+                    <div class="answer-order">${beautifyRank(boosting.current_rank)}</div>
+                    ${boosting.type == 'divisions' ? `<div class="answer-order">${beautifyRank(boosting.desired_rank)}</div>` : ''}
+
+                    <div class="answer-order">${beautifyRank(boosting.server)}</div>
+                    ${boosting.type == 'netwins' ? `<div class="answer-order">${beautifyRank(boosting.wins)}</div>` : ''}
+                    ${boosting.type == 'placements' ? `<div class="answer-order">${beautifyRank(boosting.games)}</div>` : ''}
+
+                    <div class="answer-order">${beautifyRank(boosting.price)}</div>
+                </div>
+                <div class="col-12">
+                <div class="text-discord">
+                    <p>To complete a purchase, contact us via <a href="https://discord.gg/edu4G86q">Discord</a>... </p>
+
+                </div>
+
+                </div>
+            </div>
+        </div>`;
+        $.confirm({
+
+            title: title,
+            content: content,
+            buttons:
+                {
+                    Done: {
+                        btnClass: 'btn-green',
+                        action: function () {
+                        }
+                    },
+                },
+            columnClass: 'col-md-7'
+
+        })
+
+    }
+    // $('button.btn-checkout').confirm({
+    //     closeIcon: true,
+    //     icon: 'fab fa-accessible-icon',
+    //     title: 'Hello world babe!',
+    //     content: 'Simple modal!',
+    //     columnClass: 'col-md-4 col-md-offset-4',
+    // });
+
+
 });
+
+function beautifyRank(rank) {
+    var value = "";
+    var rankArr = rank.split('_');
+    for (var item of rankArr) {
+        item = item.charAt(0).toUpperCase() + item.slice(1);
+        value += item + " ";
+    }
+    return value.trim();
+}
 
 function setRankPriceValue(item) {
     var value = 0;
@@ -202,3 +287,10 @@ function setRankPriceValue(item) {
     }
     return value;
 }
+
+//Side bar
+$('.slide').on('click', function () {
+    $(this).toggleClass('is-expanded');
+})
+
+

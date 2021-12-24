@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Division;
+use App\Events\NewNotification;
+use App\Models\Boosting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -17,7 +19,7 @@ class HomeController extends Controller
         return view('landing-page.home');
     }
 
-    public function divisions()
+    public function show($id)
     {
         $ranks = [
             [
@@ -57,8 +59,17 @@ class HomeController extends Controller
                 'items' => [5]
             ],
         ];
-        return view('landing-page.divisions', compact('ranks'));
+        if (strtolower($id) == 'divisions') {
+            return view('landing-page.divisions', compact('ranks', 'id'));
+        } elseif (strtolower($id) == 'netwins') {
+            return view('landing-page.netwins', compact('ranks', 'id'));
+        } elseif (strtolower($id) == 'placements') {
+            return view('landing-page.placements', compact('ranks', 'id'));
+        } else {
+            return redirect()->route('home');
+        }
     }
+
 
     public function saveDivisions(Request $request)
     {
@@ -70,55 +81,16 @@ class HomeController extends Controller
         if (isset($data['roleType'])) {
             $data['roleType'] = implode(',', $data['roleType']);
         }
-        Division::create($data);
-        return redirect()->back();
+        $boosting = Boosting::create($data);
+//        event(new NewNotification());
+        return redirect()->back()->with('boosting', $boosting);
     }
 
-    public function netwins()
-    {
-        $ranks = [
-            [
-                'name' => 'iron',
-                'items' => [4, 3, 2, 1]
-            ],
-            [
-                'name' => 'bronze',
-                'items' => [4, 3, 2, 1]
-            ],
-            [
-                'name' => 'silver',
-                'items' => [4, 3, 2, 1]
-            ],
-            [
-                'name' => 'gold',
-                'items' => [4, 3, 2, 1]
-            ],
-            [
-                'name' => 'platinum',
-                'items' => [4, 3, 2, 1]
-            ],
-            [
-                'name' => 'diamond',
-                'items' => [4, 3, 2, 1]
-            ],
-            [
-                'name' => 'master',
-                'items' => [5]
-            ],
-            [
-                'name' => 'grandMaster',
-                'items' => [5]
-            ],
-            [
-                'name' => 'challenger',
-                'items' => [5]
-            ],
-        ];
-        return view('landing-page.netwins', compact('ranks'));
-    }
+//    public function marketplace()
+//    {
+////        $requests = DB::table('marketplaces')->get();
+//        return view('landing-page.marketplace');
+//    }
 
-    public function placements()
-    {
-        return view('landing-page.placements');
-    }
+
 }

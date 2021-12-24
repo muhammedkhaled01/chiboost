@@ -978,14 +978,10 @@ button.btn.btn-checkout:hover {
 /*End divisions page*/
 /*Start dashboard admin*/
 aside {
-    position: fixed;
-    top: 121px;
-    bottom: 0;
-    left: 0;
+    height: 100vh;
+    padding: 20px 0;
     color: #14112d;
-    width: 240px;
     max-height: 100%;
-    z-index: 1000;
     background: #fff;
     -webkit-box-shadow: 0px 8px 14.72px 1.28px rgb(229 228 230 / 50%);
     box-shadow: 0px 8px 14.72px 1.28px rgb(229 228 230 / 50%);
@@ -1002,6 +998,9 @@ aside {
 /*.slide {*/
 /*    margin: 0 0 20px 0;*/
 /*}*/
+.content-modal {
+    padding: 20px;
+}
 
 .side-item.side-item-category {
     color: #2c364c;
@@ -1012,6 +1011,10 @@ aside {
     margin-bottom: 12px;
     height: 15px;
     padding: 0 20px 0 25px;
+}
+
+.slide-menu .slide {
+    overflow: hidden;
 }
 
 aside ul.slide-menu {
@@ -1028,10 +1031,15 @@ aside ul.slide-menu a.side-menu__item {
     padding: 0 20px 0 26px;
 }
 
-.side-menu__item i {
+.side-menu__item i:first-of-type {
     font-size: 18px;
     margin-right: 10px;
 
+}
+
+.side-menu__item i.fa-angle-down {
+    margin-left: 11px;
+    margin-top: 2px;
 }
 
 .side-menu__label {
@@ -1042,4 +1050,228 @@ aside ul.slide-menu a.side-menu__item {
     font-weight: 400;
 }
 
+.slide-menu-request {
+    list-style: none;
+    margin-top: 5px;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    padding-left: 29px;
+}
+
+.slide.is-expanded .slide-menu-request {
+    padding: 10px 0 10px 30px;
+    max-height: 200vh;
+}
+
+.slide-menu-request li {
+    position: relative;
+    padding-left: 25px;
+}
+
+.slide-menu-request li a {
+    text-decoration: none;
+    color: #6d7790;
+    font-size: 13px;
+    font-weight: 400;
+
+}
+
+span.notifications {
+    float: right;
+    margin-right: 15px;
+    background: #f00;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4px;
+
+}
+
 /*End dashboard admin*/
+
+/*Start invoice*/
+.title-invoice {
+    text-align: center;
+    font-weight: 600;
+}
+
+.text-title-order {
+    font-size: 17px;
+    font-weight: 500;
+    color: #8e3010;
+    margin-bottom: 10px;
+}
+
+.answer-order {
+    font-size: 17px;
+    font-weight: 400;
+    color: #000000;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.text-discord p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #222222;
+    display: inline-block;
+    margin-top: 17px;
+}
+
+.text-discord a {
+    text-decoration: none;
+    font-size: 17px;
+    color: #8e3010 !important;
+    font-weight: 500;
+}
+
+.jconfirm.jconfirm-white .jconfirm-box .jconfirm-buttons, .jconfirm.jconfirm-light .jconfirm-box .jconfirm-buttons {
+    float: left;
+    margin-left: 23px;
+}
+
+button.btn.btn-green {
+    width: 130px;
+    padding: 11px !important;
+    background: #000 !important;
+}
+
+/*End invoice*/
+
+/*Start marketplace page*/
+.head-marketplace {
+    font-size: 35px;
+    font-weight: 700;
+    color: #8e3010;
+    margin: 40px 0;
+}
+
+.account {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.part-top {
+    padding: 30px;
+    height: 260px;
+    background: #000;
+    border-radius: 4px 4px 0 0;
+}
+
+.main-image {
+    background-image: url("../images/part-top.webp");
+    background-size: cover;
+    height: 80px;
+    width: 140px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: auto;
+}
+
+.part-bottom {
+    background: #fff;
+    padding: 20px 0;
+}
+
+.info-cols {
+    margin-bottom: 15px;
+}
+
+div.label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 120%;
+    text-align: left;
+    color: #50505a;
+    padding: 0;
+    margin: 0;
+}
+
+.server-name, .rank-name {
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    text-transform: uppercase;
+    color: #5e20e5;
+    padding: 5px 0 0;
+    margin: 0;
+}
+
+.col-server {
+    padding: 0 16px;
+    margin: 0;
+    border-left: 1px solid #c9c9d1;
+}
+
+.main-price {
+    padding: 20px 0 0;
+    margin: 0;
+}
+
+.main-price .price {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: uppercase;
+    color: #50505a;
+}
+
+.wrap-link {
+    padding: 10px 0 0;
+}
+
+.wrap-link .link-details {
+    width: auto;
+    height: 35px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 40px;
+    margin: 0;
+    background-color: #5e20e5;
+    border-radius: 3px;
+    transition: all .3s ease-out;
+    cursor: pointer;
+}
+
+.wrap-link .link-details:hover {
+    background-color: #2f117f;
+}
+
+.add-account .form-group:first-of-type {
+    margin-top: 50px;
+}
+
+.add-account .form-group input,
+.add-account .form-group select {
+    height: 45px;
+}
+.add-account .form-group select {
+    cursor: pointer;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.add-account .form-group label {
+    font-size: 17px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: #8e3010;
+}
+
+/*End marketplace page*/

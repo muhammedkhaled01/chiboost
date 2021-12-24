@@ -8,7 +8,7 @@
                 <div class="carousel-item active">
                     <div class="multi-option-slider">
                         <div class="option">
-                            <a href="{{route('divisions')}}">
+                            <a href="{{route('boosting','divisions')}}">
                                 <picture>
                                     <source srcset="https://www.chiboost.net/images/slider/figure/option1.webp"
                                             type="image/webp">
@@ -28,7 +28,7 @@
                             </a>
                         </div>
                         <div class="option">
-                            <a href="{{route('netwins')}}">
+                            <a href="{{route('boosting','netwins')}}">
                                 <picture>
                                     <source srcset="https://www.chiboost.net/images/slider/figure/option2.webp"
                                             type="image/webp">
@@ -48,7 +48,7 @@
                             </a>
                         </div>
                         <div class="option">
-                            <a href="{{route('placements')}}">
+                            <a href="{{route('boosting','placements')}}">
                                 <picture>
                                     <source srcset="https://www.chiboost.net/images/slider/figure/option3.webp"
                                             type="image/webp">

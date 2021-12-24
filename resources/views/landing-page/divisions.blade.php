@@ -3,8 +3,10 @@
     @include('layouts.navbar')
     <section class="bg-boosting">
 
+
         <form class="container" action="{{route('saveDivisions')}}" method="post">
             @csrf
+            <input type="hidden" name="type" value="{{$id}}"/>
             <div class="row">
                 <div class="col-12">
                     <div class="page-title">
@@ -52,26 +54,26 @@
                         <div class="form-group">
                             <label for="server">Server</label>
                             <select class="form-select" name="server" id="server">
-                                <option >EUW</option>
-                                <option >EUNE</option>
-                                <option >LAN</option>
-                                <option >LAS</option>
-                                <option >NA</option>
-                                <option >OCE</option>
-                                <option >TR</option>
-                                <option >RU</option>
+                                <option>EUW</option>
+                                <option>EUNE</option>
+                                <option>LAN</option>
+                                <option>LAS</option>
+                                <option>NA</option>
+                                <option>OCE</option>
+                                <option>TR</option>
+                                <option>RU</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="queue">Queue</label>
                             <select class="form-select" name="queue" id="queue">
-                                <option >Solo/Duo Queue</option>
-                                <option >Flex Queue</option>
-                                <option >3v3 Flex Queue</option>
+                                <option>Solo/Duo Queue</option>
+                                <option>Flex Queue</option>
+                                <option>3v3 Flex Queue</option>
                             </select>
                         </div>
-                        <label>Roles</label>
 
+                        <label>Roles</label>
                         <div id="role-selection" class="form-group">
                             <div class="form-check">
                                 <img src="{{asset('assets/images/top.png')}}" class="role roleTop" alt="Top">
@@ -105,6 +107,7 @@
                                 <label class="form-check-label" for="roleSupport">Support</label>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6 mx-auto">
@@ -218,6 +221,7 @@
                                 </label>
                             </div>
                         </div>
+
                         <div class="price">
                             $<input name="price" id="price" data-mainPrice="10.00" value="10.00" readonly>
                         </div>
@@ -231,5 +235,23 @@
         </form>
     </section>
 
-
+@section('page_js')
+    <script>
+        @if(session()->has('boosting'))
+            <?php $boosting=Session::get('boosting');?>
+            boosting={};
+        boosting.id="{{$boosting->id}}";
+        boosting.current_rank="{{$boosting->current_rank}}";
+        boosting.league_points="{{ $boosting->league_points }}";
+        boosting.server="{{ $boosting->server }}";
+        boosting.queue="{{ $boosting->queue }}";
+        boosting.roleType="{{ $boosting->roleType }}";
+        boosting.desired_rank="{{ $boosting->desired_rank }}";
+        boosting.options="{{ $boosting->options }}";
+        boosting.price="{{ $boosting->price }}";
+        boosting.type="{{ $boosting->type }}";
+        @endif
+    </script>
 @endsection
+@endsection
+

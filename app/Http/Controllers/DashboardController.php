@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Division;
+use App\Models\Boosting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,8 +15,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $requests = DB::table('divisions')->leftJoin('users', 'user_id', '=', 'users.id')->select('divisions.*','users.name as username','users.phone as phone')->orderBy('divisions.id', 'desc')->get();
-        return view('admin-dashboard.admin-dashboard', compact('requests'));
+        return view('admin-dashboard.admin-dashboard');
     }
 
     /**
@@ -48,7 +47,27 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
+        $requests = Boosting::whereType($id)->leftJoin('users', 'user_id', '=', 'users.id')->select('boostings.*', 'users.name as username', 'users.phone as phone')->orderBy('boostings.id', 'desc')->get();
+        $pageName = strtolower($id);
+        return view('admin-dashboard.admin-boosting', compact('requests', 'pageName'));
+    }
 
+    public function search(Request $request, $id)
+    {
+        $request->validate([
+            'q' => 'required'
+        ]);
+        $q = $request->q;
+        $filteredCodes = Boosting::where('id', 'like', '%' . $q . '%')->get();
+
+        if ($filteredCodes) {
+            $requests = Boosting::whereType($id)->leftJoin('users', 'user_id', '=', 'users.id')->select('boostings.*', 'users.name as username', 'users.phone as phone')->orderBy('boostings.id', 'desc')->get();
+            $pageName = strtolower($id);
+            return view('admin-dashboard.admin-boosting', compact('requests', 'pageName'))->with([
+                'codes' => $filteredCodes
+            ]);
+        } else {
+        }
     }
 
     /**
@@ -82,7 +101,7 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        Division::find($id)->delete();
+        Boosting::find($id)->delete();
         session()->flash('delete', 'Item has been deleted successfully');
         return redirect()->back();
     }

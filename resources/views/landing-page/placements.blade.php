@@ -3,7 +3,9 @@
     @include('layouts.navbar')
     <section class="bg-boosting">
 
-        <form class="container">
+        <form class="container" action="{{route('saveDivisions')}}" method="post">
+            @csrf
+            <input type="hidden" name="type" value="{{$id}}"/>
             <div class="row">
                 <div class="col-12">
                     <div class="page-title">
@@ -19,39 +21,39 @@
                         </div>
                         <div class="form-group">
                             <label for="from-select">Rank</label>
-                            <select class="form-select" id="from-select">
-                                <option id="0" value="65">Unranked</option>
-                                <option id="1" value="66">Iron</option>
-                                <option id="2" value="67">Bronze</option>
-                                <option id="3" value="68">Silver</option>
-                                <option id="4" value="69">Gold</option>
-                                <option id="5" value="70">Platinum</option>
-                                <option id="6" value="71">Diamond</option>
-                                <option id="7" value="72">Master</option>
-                                <option id="8" value="73">Grandmaster</option>
-                                <option id="9" value="74">Challenger</option>
+                            <select class="form-select" name="current_rank" id="from-select">
+                                <option id="0" >Unranked</option>
+                                <option id="1" >Iron</option>
+                                <option id="2" >Bronze</option>
+                                <option id="3" >Silver</option>
+                                <option id="4">Gold</option>
+                                <option id="5">Platinum</option>
+                                <option id="6">Diamond</option>
+                                <option id="7">Master</option>
+                                <option id="8">Grandmaster</option>
+                                <option id="9">Challenger</option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="server">Server</label>
-                            <select class="form-select" id="server">
-                                <option value="1">EUW</option>
-                                <option value="2">EUNE</option>
-                                <option value="3">LAN</option>
-                                <option value="4">LAS</option>
-                                <option value="5">NA</option>
-                                <option value="6">OCE</option>
-                                <option value="7">TR</option>
-                                <option value="8">RU</option>
+                            <select class="form-select" name="server" id="server">
+                                <option>EUW</option>
+                                <option>EUNE</option>
+                                <option>LAN</option>
+                                <option>LAS</option>
+                                <option>NA</option>
+                                <option>OCE</option>
+                                <option>TR</option>
+                                <option>RU</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="queue">Queue</label>
-                            <select class="form-select" id="queue">
-                                <option value="1">Solo/Duo Queue</option>
-                                <option value="2">Flex Queue</option>
-                                <option value="3">3v3 Flex Queue</option>
+                            <select class="form-select" name="queue" id="queue">
+                                <option>Solo/Duo Queue</option>
+                                <option >Flex Queue</option>
+                                <option>3v3 Flex Queue</option>
                             </select>
                         </div>
 
@@ -63,43 +65,53 @@
                     <div class="boosting-flag">
 
                         <div class="form-group">
-                            <label for="currentLP"><span class="lp-label">0</span> Game(s)</label>
-                            <input type="range" class="form-control-range" id="currentLP" min="0" step="1" max="10"
-                                   value="0">
+                            <label for="currentLP"><span class="lp-label">1</span> Game(s)</label>
+                            <input type="range" name="games" class="form-control-range" id="currentLP" min="1" step="1" max="10"
+                                   value="1">
                         </div>
+
                         <label>Roles</label>
                         <div id="role-selection" class="form-group">
                             <div class="form-check">
                                 <img src="{{asset('assets/images/top.png')}}" class="role roleTop" alt="Top">
-                                <input class="form-check-input" type="checkbox" id="roleTop" value="top">
+                                <input class="form-check-input role-checkbox" data-price="1" type="checkbox"
+                                       name="roleType[]" id="roleTop" value="top">
                                 <label class="form-check-label" for="roleTop">Top</label>
                             </div>
                             <div class="form-check">
                                 <img src="{{asset('assets/images/jungle.png')}}" class="role roleJungle" alt="Jungle">
-                                <input class="form-check-input" type="checkbox" id="roleJungle" value="jungle">
+                                <input class="form-check-input role-checkbox " data-price="2" type="checkbox"
+                                       name="roleType[]" id="roleJungle" value="jungle">
                                 <label class="form-check-label" for="roleJungle">Jungle</label>
                             </div>
                             <div class="form-check">
                                 <img src="{{asset('assets//images/mid.png')}}" class="role roleMid" alt="Mid">
-                                <input class="form-check-input" type="checkbox" id="roleMid" value="mid">
+                                <input class="form-check-input role-checkbox" data-price="3" type="checkbox"
+                                       name="roleType[]" id="roleMid" value="mid">
                                 <label class="form-check-label" for="roleMid">Mid</label>
                             </div>
                             <div class="form-check">
                                 <img src="{{asset('assets/images/bot.png')}}" class="role roleBot" alt="Bot">
-                                <input class="form-check-input" type="checkbox" id="roleBot" value="bot">
+                                <input class="form-check-input role-checkbox" data-price="4" type="checkbox"
+                                       name="roleType[]" id="roleBot" value="bot">
                                 <label class="form-check-label" for="roleBot">Bot</label>
                             </div>
                             <div class="form-check">
                                 <img src="{{asset('assets/images/support.png')}}" class="role roleSupport"
                                      alt="Support">
-                                <input class="form-check-input" type="checkbox" id="roleSupport" value="support">
+                                <input class="form-check-input role-checkbox" data-price="5" type="checkbox"
+                                       name="roleType[]" id="roleSupport" value="support">
                                 <label class="form-check-label" for="roleSupport">Support</label>
                             </div>
                         </div>
+
+
+
                         <label for="addons">Options</label>
                         <div id="addons" class="form-group">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonDuoQ" value="duoQ">
+                                <input class="form-check-input check-options" data-price="1"
+                                       type="checkbox" id="addonDuoQ" value="duoQ" name="options[]">
                                 <label class="form-check-label" for="addonDuoQ">
                                     duoQ
                                     <button type="button"
@@ -117,7 +129,8 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonChampions" value="Champions">
+                                <input class="form-check-input check-options" data-price="2" type="checkbox"
+                                       id="addonChampions" value="Champions" name="options[]">
                                 <label class="form-check-label" for="addonChampions">
                                     Champions
                                     <button type="button"
@@ -135,7 +148,8 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonLivestream" value="Livestream">
+                                <input class="form-check-input check-options" data-price="3" type="checkbox"
+                                       id="addonLivestream" value="Livestream" name="options[]">
                                 <label class="form-check-label" for="addonLivestream">
                                     Livestream
                                     <button type="button" aria-label="We will stream the game live on twitch.tv."
@@ -152,7 +166,8 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="addonPremium" value="Premium">
+                                <input class="form-check-input check-options" data-price="4" type="checkbox"
+                                       id="addonPremium" value="Premium" name="options[]">
                                 <label class="form-check-label" for="addonPremium">
                                     Premium
                                     <button type="button"
@@ -170,10 +185,12 @@
                                 </label>
                             </div>
                         </div>
+
                         <div class="price">
-                            $<span id="price">9.00</span>
+                            $<input name="price" id="price" data-mainPrice="2.20" value="2.20" readonly>
                         </div>
-                        <button type="button" class="btn btn-checkout mt-3">
+
+                        <button type="submit" class="btn btn-checkout mt-3">
                             Checkout
                         </button>
 
@@ -182,5 +199,23 @@
             </div>
         </form>
     </section>
-
+@section('page_js')
+    <script>
+        @if(session()->has('boosting'))
+        <?php $boosting=Session::get('boosting');?>
+            boosting={};
+        boosting.id="{{$boosting->id}}";
+        boosting.current_rank="{{$boosting->current_rank}}";
+        boosting.league_points="{{ $boosting->league_points }}";
+        boosting.server="{{ $boosting->server }}";
+        boosting.games="{{ $boosting->games }}";
+        boosting.queue="{{ $boosting->queue }}";
+        boosting.roleType="{{ $boosting->roleType }}";
+        boosting.desired_rank="{{ $boosting->desired_rank }}";
+        boosting.options="{{ $boosting->options }}";
+        boosting.price="{{ $boosting->price }}";
+        boosting.type="{{ $boosting->type }}";
+        @endif
+    </script>
+@endsection
 @endsection

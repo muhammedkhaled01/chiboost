@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light ">
     <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{url('/')}}">
             <img src="https://www.chiboost.net/images/logo.svg?ver=2.3.0" alt="ChiBoost">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -20,28 +20,28 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <small>League of Legends</small>
-                        <a class="dropdown-item" href="{{url('divisions')}}">Divisions</a>
-                        <a class="dropdown-item" href="{{url('netwins')}}">Netwins</a>
-                        <a class="dropdown-item" href="{{url('placements')}}">Placements</a>
+                        <a class="dropdown-item" href="{{route('boosting','divisions')}}">Divisions</a>
+                        <a class="dropdown-item" href="{{route('boosting','netwins')}}">Netwins</a>
+                        <a class="dropdown-item" href="{{route('boosting','placements')}}">Placements</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Marketplace</a>
+                    <a class="nav-link" href="{{route('marketplace')}}">Marketplace</a>
                 </li>
 
             </ul>
             <div class="log">
                 @auth
-                <form method="POST" action="{{route('logout')}}">
-                    @csrf
-                    <span class="username">{{Auth::user()->name}}</span>
-                    <button type="submit" class="btn btn-logout">Logout</button>
-                </form>
+                    <form method="POST" action="{{route('logout')}}">
+                        @csrf
+                        <span class="username">{{Auth::user()->name}}</span>
+                        <button type="submit" class="btn btn-logout">Logout</button>
+                    </form>
                 @endauth
                 @guest
-                <a href="{{url('login')}}"  class="btn">Login</a>
-                <a href="{{url('register')}}" class="btn ">Register</a>
-                    @endguest
+                    <a href="{{url('login')}}" class="btn">Login</a>
+                    <a href="{{url('register')}}" class="btn ">Register</a>
+                @endguest
             </div>
         </div>
     </div>
